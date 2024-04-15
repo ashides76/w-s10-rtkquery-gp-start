@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleShowCompletedTodos } from '../state/todosSlice'
+import { useGetTodosQuery, useToggleTodoMutation } from '../state/todosApi'
 
 const StyledTodo = styled.li`
   text-decoration: ${pr => pr.$complete ? 'line-through' : 'initial'};
@@ -9,25 +10,33 @@ const StyledTodo = styled.li`
 `
 
 export default function Todo() {
+  // rtk query
+  const { data: todos, isLoading: todosLoading, isFetching: todosRefreshing } = useGetTodosQuery() //why object? How do I know this should be object vs. array? We're mapping over array.
+  console.log('todos', todos);
+  const [toggleTodo, {error: toggleError, isLoading: todosToggling}] = useToggleTodoMutation() //why array? How do I know this should be array vs. object? this is a function call. 
+  console.log('toggleTodo', toggleTodo);
   // redux
   const showCompletedTodos = useSelector(st => st.todosState.showCompletedTodos)
   const dispatch = useDispatch()
   return (
     <div id="todos">
-      <div className="error"></div>
-      <h3>Todos</h3>
+      <div className="error">{toggleError && toggleError.data.message}</div>
+      <h3>Todos {(todosToggling || todosRefreshing) && 'Being updated...'}</h3>
       <ul>
         {
-          [
-            { id: 1, label: 'Laundry', complete: true },
-            { id: 2, label: 'Groceries', complete: false },
-            { id: 3, label: 'Dishes', complete: false },
-          ].filter(todo => {
+          todosLoading ? 'todos loading...' :
+          todos?.filter(todo => {
             return showCompletedTodos || !todo.complete
           })
             .map(todo => {
+              const onToggle = () => {
+                toggleTodo({id: todo.id, todo: {complete: !todo.complete}})
+              }
               return (
-                <StyledTodo $complete={todo.complete} key={todo.id}>
+                <StyledTodo 
+                  onClick={onToggle}
+                  $complete={todo.complete} 
+                  key={todo.id}>
                   <span>{todo.label}{todo.complete && ' ✔️'}</span>
                 </StyledTodo>
               )
