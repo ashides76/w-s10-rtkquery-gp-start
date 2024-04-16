@@ -37,8 +37,8 @@ export default function TodoForm() {
 
   const onNewTodo = async evt => {
     evt.preventDefault()
-    const { todoLabel: label, todoIsCompleted: complete } = state
-    createTodo({label, complete})
+    const { todoLabel: label, todoIsCompleted: complete } = state  
+    createTodo({label, complete}) //why backend is allowing create with supplied name label and complete as payload??? Not sure I understand concept of alias here with declared intial state with different name.
       .unwrap()
       .then(() => {
         resetForm()
