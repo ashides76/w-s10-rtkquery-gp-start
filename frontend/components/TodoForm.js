@@ -37,7 +37,7 @@ export default function TodoForm() {
 
   const onNewTodo = async evt => {
     evt.preventDefault()
-    const { todoLabel: label, todoIsCompleted: complete } = state // from state of what?
+    const { todoLabel: label, todoIsCompleted: complete } = state
     createTodo({label, complete})
       .unwrap()
       .then(() => {
