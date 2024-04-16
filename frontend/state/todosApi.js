@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const todosApi = createApi({
     reducerPath: 'todosApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:9009/api/' }),
-    tagTypes: ['Todos'], //where is this capital Todos coming from? 
+    tagTypes: ['Todos'], //where is this capital Todos coming from? What if I have index value 1 and 2, and 3 so on....?
     endpoints: build => ({
         getTodos: build.query({
             query: () => 'todos',
