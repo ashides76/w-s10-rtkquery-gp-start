@@ -3,12 +3,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const todosApi = createApi({
     reducerPath: 'todosApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:9009/api/' }),
-    tagTypes: ['Todos'], //where is this capital Todos coming from? What if I have index value 1 and 2, and 3 so on....?
+    tagTypes: ['Todos'], 
     endpoints: build => ({
         getTodos: build.query({
-            query: () => 'todos',
+            query: () => 'todos?q=foo',
             providesTags: ['Todos']
-        }), // how do I pass querystring value and authorizaion for api? 
+        }), 
         toggleTodo: build.mutation({
             query: ({id, todo}) => ({
                 url: `todos/${id}`,
@@ -29,6 +29,6 @@ export const todosApi = createApi({
 })
 
 export const {
-    useGetTodosQuery, useToggleTodoMutation, useCreateTodoMutation  // use and Query, Mutation are standard or name can be anything? 
+    useGetTodosQuery, useToggleTodoMutation, useCreateTodoMutation 
 } = todosApi
 

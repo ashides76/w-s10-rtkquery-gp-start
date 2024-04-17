@@ -22,8 +22,7 @@ const reducer = (state, action) => {
 
 export default function TodoForm() {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [createTodo, { error, isLoading }] = useCreateTodoMutation() //how do I add success response message? I see isError as one of the property (any reason using just error?)
-
+  const [createTodo, { error, isLoading }] = useCreateTodoMutation() 
   const onLabelChange = ({ target: { value } }) => {
     dispatch({ type: CHANGE_LABEL, payload: value })
   }
@@ -38,12 +37,12 @@ export default function TodoForm() {
   const onNewTodo = async evt => {
     evt.preventDefault()
     const { todoLabel: label, todoIsCompleted: complete } = state  
-    createTodo({label, complete}) //why backend is allowing create with supplied name label and complete as payload??? Not sure I understand concept of alias here with declared intial state with different name.
+    createTodo({label, complete})
       .unwrap()
       .then(() => {
         resetForm()
       })
-      .catch(err => {  // catch is added to keep the form data resident??? I coudn't follow the message you delivered. 
+      .catch(err => { 
         err.data.message
       })
   }

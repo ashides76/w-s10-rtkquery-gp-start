@@ -5,7 +5,7 @@ import { todosApi } from './todosApi'
 export const store = configureStore({
   reducer: {
     todosState: todosReducer,
-    [todosApi.reducerPath]: todosApi.reducer, //is this destrcturing, help me with this. 
+    [todosApi.reducerPath]: todosApi.reducer, 
   },
   middleware: getDefault => getDefault().concat(
     todosApi.middleware,

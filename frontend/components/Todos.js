@@ -11,9 +11,9 @@ const StyledTodo = styled.li`
 
 export default function Todo() {
   // rtk query
-  const { data: todos, isLoading: todosLoading, isFetching: todosRefreshing } = useGetTodosQuery() //why object? How do I know this should be object vs. array? We're mapping over array.
+  const { data: todos, isLoading: todosLoading, isFetching: todosRefreshing } = useGetTodosQuery() 
   console.log('todos', todos);
-  const [toggleTodo, {error: toggleError, isLoading: todosToggling}] = useToggleTodoMutation() //why array? How do I know this should be array vs. object? this is a function call. 
+  const [toggleTodo, {error: toggleError, isLoading: todosToggling}] = useToggleTodoMutation() 
   console.log('toggleTodo', toggleTodo);
   // redux
   const showCompletedTodos = useSelector(st => st.todosState.showCompletedTodos)
